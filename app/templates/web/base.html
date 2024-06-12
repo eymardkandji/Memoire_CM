@@ -10,12 +10,12 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link rel="icon" href="{% static 'web/img/favicon.ico' %}">
+    <link rel="icon" href="{% static 'web/img/pve.jpg' %}">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
     
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
@@ -54,15 +54,15 @@
                     <a href="index.html" class="nav-item nav-link"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-laptop me-2"></i>Nodes</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            {% for node in nodes %}
-                            	<a href="" class="dropdown-item">{{ node }}</a>
+                        <div class="dropdown-menu bg-transparent border-0 text-center">
+                            {% for node in nodes_name %}
+                            	<a href="" style="letter-spacing: 5px" class="dropdown-item">{{ node }}</a>
                             {% endfor %}
                         </div>
                     </div>
 
-                    <a href="network/" class="nav-item nav-link"><i class="fa fa-th me-2"></i>Networks</a>
-                    <a href="chart.html" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>High Availability</a>
+                    <a href="" class="nav-item nav-link"><i class="fa bi-hdd-network me-2"></i>Networks</a>
+                    <a href="" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>High Availability</a>
                     <!--<a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>-->
                    <!-- <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2">Form</i></a>
                     <div class="nav-item dropdown">
@@ -84,12 +84,15 @@
         <div class="content">
             <!-- Navbar Start -->
             <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-                <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
-                    <h2 class="text-primary mb-0"><i class="fa fa-user-edit"></i></h2>
+                <a href="" class="navbar-brand d-flex d-lg-none me-4">
+                    <h2 class="text-primary mb-0"><i class="fa bi-caret-right"></i></h2>
                 </a>
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
+                <div class="text-center" style="width: 100%">
+                    <h4>{{ cluster_name }}</h4>
+                </div>
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -106,25 +109,12 @@
             </nav>
             <!-- Navbar End -->
 
-
-            <!-- Blank Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
-                    <div class="col-md-6 text-center">
-                        <h3>This is blank page</h3>
-
-                        {% block base-content %}
+            {% block base-content %}
                         	
-                        {% endblock %}
-
-                    </div>
-                </div>
-            </div>
-            <!-- Blank End -->
-
+            {% endblock %}
 
             <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
+            <div class="container-fluid pt-4 px-4 ">
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
@@ -153,6 +143,7 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{% static 'web/lib/chart/chart.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0/dist/chartjs-plugin-datalabels.min.js"></script>
     <script src="{% static 'web/lib/easing/easing.min.js' %}"></script>
     <script src="{% static 'web/lib/waypoints/waypoints.min.js' %}"></script>
     <script src="{% static 'web/lib/owlcarousel/owl.carousel.min.js' %}"></script>
