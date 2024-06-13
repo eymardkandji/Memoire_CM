@@ -287,3 +287,15 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #6c757d; /* Assurez-vous que la couleur de fond corresponde à celle de votre footer */
+    color: white;
+    text-align: center;
+    padding: 1rem 0;
+    z-index: 1000; /* Pour s'assurer qu'il reste au-dessus des autres éléments */
+}

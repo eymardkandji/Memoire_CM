@@ -63,17 +63,6 @@
 
                     <a href="" class="nav-item nav-link"><i class="fa bi-hdd-network me-2"></i>Networks</a>
                     <a href="" class="nav-item nav-link"><i class="fa fa-chart-bar me-2"></i>High Availability</a>
-                    <!--<a href="table.html" class="nav-item nav-link"><i class="fa fa-table me-2"></i>Tables</a>-->
-                   <!-- <a href="form.html" class="nav-item nav-link"><i class="fa fa-keyboard me-2">Form</i></a>
-                    <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-bs-toggle="dropdown"><i class="far fa-file-alt me-2"></i>Pages</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="signin.html" class="dropdown-item">Sign In</a>
-                            <a href="signup.html" class="dropdown-item">Sign Up</a>
-                            <a href="404.html" class="dropdown-item">404 Error</a>
-                            <a href="base.html" class="dropdown-item active">Base Page</a>
-                        </div>-->
-                    </div>
                 </div>
             </nav>
         </div>
@@ -114,7 +103,7 @@
             {% endblock %}
 
             <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4 ">
+            <div class="container-fluid pt-4 px-4">
                 <div class="bg-secondary rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
@@ -150,6 +139,9 @@
     <script src="{% static 'web/lib/tempusdominus/js/moment.min.js' %}"></script>
     <script src="{% static 'web/lib/tempusdominus/js/moment-timezone.min.js' %}"></script>
     <script src="{% static 'web/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js' %}"></script>
+
+    <!-- Inclure le plugin chartjs-plugin-doughnutlabel -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-doughnutlabel/2.0.1/chartjs-plugin-doughnutlabel.min.js" integrity="sha512-I3r1U8L+5mTb1Mkf4u4iHO/lKVmuj7tUXKq31AyhdAjjE4yujA3g8LGv3Crnq9KzBopoFilw8nsCGh5NzGzALQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Template Javascript -->
     <script src="{% static 'web/js/main.js' %}"></script>
