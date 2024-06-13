@@ -21,7 +21,7 @@
                                             <i class="fa fa-memory fa-3x text-primary"></i>
                                             <div class="ms-3">
                                                 <p class="mb-2">Memory</p>
-                                                <h6 class="mb-0">{{ node.maxmem }} Gio</h6>
+                                                <h6 class="mb-0">{{ node.maxmem|format_bytes }}</h6>
                                             </div>
                                         </div>
                                         <canvas id="pie-chart-{{ node.node }}-memory" class="bg-secondary pb-3"></canvas>
@@ -31,7 +31,7 @@
                                             <i class="fa fa-hdd fa-3x text-primary"></i>
                                             <div class="ms-3">
                                                 <p class="mb-2">Hard Disk</p>
-                                                <h6 class="mb-0">{{ node.disk }} Gio</h6>
+                                                <h6 class="mb-0">{{ node.maxdisk|format_bytes }}</h6>
                                             </div>
                                         </div>
                                         <canvas id="pie-chart-{{ node.node }}-disk" class="bg-secondary pb-3"></canvas>
