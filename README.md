@@ -8,7 +8,7 @@ Pour pourvoir run le projet, voici les etapes à suuivre:
 
 3- Créer un environnement dédié au projet
 
-	Python -m venv .env
+	python -m venv .env
  
 4- Activer l’env
 
@@ -18,15 +18,15 @@ Pour pourvoir run le projet, voici les etapes à suuivre:
  
 5- Installer les modules du requierement.txt dans l’env
 
-  Python -m pip install -r requierement.txt
+  	python -m pip install -r requierement.txt
  
 6- Run le projet
 
-  	Python manage.py makemigrations
+  	python manage.py makemigrations
   
-  	Python manege.py migrate
+  	python manege.py migrate
   
-  	Python manege.py runserver localhost :8000
+  	python manege.py runserver localhost :8000
   
 7 – Ainsi vous pouvez accéder à l’interface web dans le navigateur.
 
