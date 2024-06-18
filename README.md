@@ -22,11 +22,11 @@ Pour pourvoir run le projet, voici les etapes à suuivre:
  
 6- Run le projet
 
-  Python manage.py makemigrations
+  	Python manage.py makemigrations
   
-  Python manege.py migrate
+  	Python manege.py migrate
   
-  Python manege.py runserver localhost :8000
+  	Python manege.py runserver localhost :8000
   
 7 – Ainsi vous pouvez accéder à l’interface web dans le navigateur.
 
