@@ -1,6 +1,7 @@
 {% extends 'web/base.html' %}
 {% load custom_filters %}
 {% block title %} Dashboard - Cluster Manager {% endblock %}
+{% block Dashboard-active %}active{% endblock %}
 {% block base-content %}
 <div class="container-fluid pt-4 px-4">
     <div class="col-sm-12 col-xl-6" style="width: 100%">
@@ -10,8 +11,9 @@
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item bg-transparent mt-4">
                             <h2 class="accordion-header" id="heading-{{ node.node }}">
-                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ node.node }}" aria-expanded="true" aria-controls="collapse-{{ node.node }}">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ node.node }}" aria-expanded="true" aria-controls="collapse-{{ node.node }}" style="background-color: #9ee3be">
                                     <i class="fa bi-toggle2-on fa-2x me-4"></i>{{ node.node }}
+                                    <i class="fa bi-clock-history fa-2x ms-5"> {{ node.uptime|format_timedelta }} - Uptime </i>
                                 </button>
                             </h2>
                             <div id="collapse-{{ node.node }}" class="accordion-collapse collapse show" aria-labelledby="heading-{{ node.node }}" data-bs-parent="#accordionExample">
@@ -21,7 +23,7 @@
                                             <i class="fa fa-memory fa-3x text-primary"></i>
                                             <div class="ms-3">
                                                 <p class="mb-2">Memory</p>
-                                                <h6 class="mb-0">{{ node.maxmem|format_bytes }}</h6>
+                                                <h6 class="mb-0">{{ node.memory.total|format_bytes }}</h6>
                                             </div>
                                         </div>
                                         <canvas id="pie-chart-{{ node.node }}-memory" class="bg-secondary pb-3"></canvas>
@@ -31,7 +33,7 @@
                                             <i class="fa fa-hdd fa-3x text-primary"></i>
                                             <div class="ms-3">
                                                 <p class="mb-2">Hard Disk</p>
-                                                <h6 class="mb-0">{{ node.maxdisk|format_bytes }}</h6>
+                                                <h6 class="mb-0">{{ node.rootfs.total|format_bytes }}</h6>
                                             </div>
                                         </div>
                                         <canvas id="pie-chart-{{ node.node }}-disk" class="bg-secondary pb-3"></canvas>
@@ -41,21 +43,20 @@
                                             <i class="fa bi-cpu-fill fa-3x text-primary"></i>
                                             <div class="ms-3">
                                                 <p class="mb-2">CPU</p>
-                                                <h6 class="mb-0">{{ node.maxcpu }} core</h6>
+                                                <h6 class="mb-0">{{ node.cpuinfo.cpus }} core</h6>
                                             </div>
                                         </div>
                                         <canvas id="pie-chart-{{ node.node }}-cpu" class="bg-secondary pb-3"></canvas>
                                     </div>
                                     <div class="col-sm-6 col-xl-3">
                                         <div class="bg-secondary rounded d-flex align-items-center justify-content-between p-4 mt-3">
-                                            <h2 class="mx-auto text-primary fa-3x">{{ node.uptime|format_timedelta }}</h2>
+                                            <i class="fa bi-cpu-fill fa-3x text-primary"></i>
+                                            <div class="ms-3">
+                                                <p class="mb-2">Swap</p>
+                                                <h6 class="mb-0">{{ node.swap.total|format_bytes }} </h6>
+                                            </div>
                                         </div>
-                                        <div class="bg-secondary d-flex align-items-center justify-content-between px-4">
-                                            <i class="bi-clock-history fa-10x position-relative mx-auto my-0 py-0"></i>
-                                        </div>
-                                        <div class="bg-secondary d-flex align-items-center justify-content-between px-4 py-3">
-                                            <h3 class="mx-auto">Uptime</h3>
-                                        </div>
+                                        <canvas id="pie-chart-{{ node.node }}-swap" class="bg-secondary pb-3"></canvas>
                                     </div>
                                 </div>
                             </div>
@@ -66,12 +67,14 @@
                             var ctxMemory = document.getElementById("pie-chart-{{ node.node }}-memory").getContext("2d");
                             var ctxDisk = document.getElementById("pie-chart-{{ node.node }}-disk").getContext("2d");
                             var ctxCpu = document.getElementById("pie-chart-{{ node.node }}-cpu").getContext("2d");
+                            var ctxSwap = document.getElementById("pie-chart-{{ node.node }}-swap").getContext("2d");
 
-                            var dataMemory = [{{ node.mem }}, {{ node.maxmem|add:node.mem }}];
-                            var dataDisk = [{{ node.disk }}, {{ node.maxdisk|add:node.disk }}];
-                            var dataCpu = [ {{ node.cpu }}, {{ node.maxcpu|add:node.cpu}} - {{ node.cpu }}];
+                            var dataMemory = [{{ node.memory.used }}, {{ node.memory.free }}];
+                            var dataDisk = [{{ node.rootfs.used }}, {{ node.rootfs.free }}];
+                            var dataCpu = [ {{ node.cpu }}, 1- {{ node.cpu }}];
+                            var dataSwap = [{{ node.swap.used }}, {{ node.swap.free }}];
 
-                            var backgroundColor = ["rgb(235,150,22)","rgba(234,220,220,0.7)", ];
+                            var backgroundColor = ["rgba(195,237,123,0.73)","rgba(64,69,83,0.88)", ];
                             var options = {
                                 responsive: true,
                                 plugins: {
@@ -114,13 +117,19 @@
                                 options,
                                 plugins: [ChartDataLabels]
                             });
+                            new Chart(ctxSwap, {
+                                type: "pie",
+                                data: { labels: ["Use", "Free"], datasets: [{ backgroundColor, data: dataSwap }] },
+                                options,
+                                plugins: [ChartDataLabels]
+                            });
                         });
                     </script>
                     {% else %}
                     <div class="accordion" id="accordionExample">
                         <div class="accordion-item bg-transparent mt-4">
                             <h2 class="accordion-header" id="heading-{{ node.node }}">
-                                <button style="background-color: #ef89a3" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ node.node }}" aria-expanded="true" aria-controls="collapse-{{ node.node }}">
+                                <button style="background-color: #a56874" class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-{{ node.node }}" aria-expanded="true" aria-controls="collapse-{{ node.node }}">
                                     <i class="fa bi-toggle2-off fa-2x me-4"></i>{{ node.node }}
                                 </button>
                             </h2>
@@ -132,6 +141,42 @@
                 {% endif %}
             {% endfor %}
         </div>
+    </div>
+
+    <div class="row g-4">
+       <div class="col-12">
+                        <div class="bg-secondary rounded h-100 p-4">
+                            <h6 class="mb-4">Responsive Table</h6>
+                            <div class="table-responsive">
+                                <table class="table table-light table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">START</th>
+                            <th scope="col">END</th>
+                            <th scope="col">UPID</th>
+                            <th scope="col">USER</th>
+                            <th scope="col">NODE</th>
+                            <th scope="col">TYPE</th>
+                            <th scope="col">STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for task in cluster_tasks %}
+                            <tr>
+                                <th scope="row">{{ task.starttime|format_datetime }}</th>
+                                <th scope="row">{{ task.endtime|format_datetime }}</th>
+                                <td>{{ task.upid }}</td>
+                                <td>{{ task.user }}</td>
+                                <td>{{ task.node }}</td>
+                                <td>{{ task.type }}</td>
+                                <td>{{ task.status }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                            </div>
+                        </div>
+                    </div>
     </div>
 </div>
 {% endblock %}

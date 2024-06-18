@@ -1,15 +1,16 @@
 from django import template
-import datetime
+from datetime import *
 
 register = template.Library()
 
 @register.filter
 def format_timedelta(seconds):
-    td = datetime.timedelta(seconds=seconds)
+    td = timedelta(seconds=seconds)
     total_seconds = int(td.total_seconds())
-    hours, remainder = divmod(total_seconds, 3600)
+    days, remainder = divmod(total_seconds, 86400)
+    hours, remainder = divmod(remainder, 3600)
     minutes, seconds = divmod(remainder, 60)
-    return f'{hours}:{minutes:02}:{seconds:02}'
+    return f'{days}d {hours:02}:{minutes:02}'
 
 @register.filter
 def format_bytes(size):
@@ -22,3 +23,17 @@ def format_bytes(size):
         n += 1
 
     return f"{size:.2f} {power_labels[n]}"
+
+@register.filter
+def format_datetime(seconds):
+    # Définir la date de référence
+    reference_date = datetime(1970, 1, 1)
+
+    # Ajouter les secondes à la date de référence
+    new_date = reference_date + timedelta(seconds=seconds)
+
+    # Formater la nouvelle date et heure
+    formatted_date = new_date.strftime('%d %b %H:%M:%S')
+
+    # Retourner la date formatée
+    return formatted_date
