@@ -5,7 +5,8 @@ from proxmoxer import ProxmoxAPI as pveAPI
 nodes_name = []
 nodes_state = []
 cluster_name = ''
-cluster_logs = []
+cluster_logs1 = []
+cluster_logs2 = []
 cluster_tasks = []
 
 
@@ -27,7 +28,7 @@ def api():
 
 def updated():
 
-    global nodes_name, nodes_state, cluster_name, cluster_logs, cluster_tasks
+    global nodes_name, nodes_state, cluster_name, cluster_logs1, cluster_logs2, cluster_tasks
 
     nodes_name = []
     pve = api()
@@ -54,15 +55,17 @@ def updated():
 
         nodes_state.append(node_)
 
-    cluster_logs = pve.cluster.log.get(max=10)
+    cluster_logs = pve.cluster.log.get(max=11)
+    cluster_logs1 = cluster_logs[:5]
+    cluster_logs2 = cluster_logs[5:]
+
     cluster_tasks = pve.cluster.tasks.get()
-    print(cluster_tasks)
+    cluster_tasks = cluster_tasks[:6]
 
 
 def base(request):
     updated()
     return render(request, "web/base.html", context={
-        "nodes_name": nodes_name,
         "cluster_name": cluster_name
     })
 
@@ -71,12 +74,26 @@ def index(request):
     updated()
     return render(request, "web/index.html", context={
         "cluster_name": cluster_name,
-        "nodes_name": nodes_name,
         "nodes_state": nodes_state,
-        "cluster_logs": cluster_logs,
+        "cluster_logs1": cluster_logs1,
+        "cluster_logs2": cluster_logs2,
         "cluster_tasks": cluster_tasks
     })
 
 
-def netwok(request):
-    return render(request, "web/network.html")
+def netwoks(request):
+    return render(request, "web/networks.html", context={
+        "cluster_name": cluster_name,
+    })
+
+
+def nodes(request):
+    return render(request, "web/nodes.html", context={
+        "cluster_name": cluster_name,
+    })
+
+
+def high_a(request):
+    return render(request, "web/high_a.html", context={
+        "cluster_name": cluster_name,
+    })

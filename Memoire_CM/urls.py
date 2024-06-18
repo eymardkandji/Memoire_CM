@@ -22,6 +22,9 @@ from app import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.index),
-    path('network/', views.netwok),
-    path('base/', views.base),
+    path('index', views.index),
+    path('networks', views.netwoks),
+    path('base', views.base),
+    path('nodes', views.nodes),
+    path('high-availability',views.high_a)
 ]

@@ -37,3 +37,12 @@ def format_datetime(seconds):
 
     # Retourner la date formatée
     return formatted_date
+
+@register.filter
+def value_pcent(value):
+    try:
+        value = str(value[2:])
+        value = int(value)
+    finally:
+        pass
+    return value

@@ -38,5 +38,6 @@
         format: 'L'
     });
 
+
 })(jQuery);
 
