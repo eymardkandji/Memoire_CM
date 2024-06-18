@@ -145,38 +145,38 @@
 
     <div class="row g-4">
        <div class="col-12">
-                        <div class="bg-secondary rounded h-100 p-4">
-                            <h6 class="mb-4">Responsive Table</h6>
-                            <div class="table-responsive">
-                                <table class="table table-light table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">START</th>
-                            <th scope="col">END</th>
-                            <th scope="col">UPID</th>
-                            <th scope="col">USER</th>
-                            <th scope="col">NODE</th>
-                            <th scope="col">TYPE</th>
-                            <th scope="col">STATUS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for task in cluster_tasks %}
-                            <tr>
-                                <th scope="row">{{ task.starttime|format_datetime }}</th>
-                                <th scope="row">{{ task.endtime|format_datetime }}</th>
-                                <td>{{ task.upid }}</td>
-                                <td>{{ task.user }}</td>
-                                <td>{{ task.node }}</td>
-                                <td>{{ task.type }}</td>
-                                <td>{{ task.status }}</td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                            </div>
-                        </div>
-                    </div>
+           <div class="bg-secondary rounded h-100 p-4">
+               <h6 class="mb-4">Responsive Table</h6>
+               <div class="table-responsive">
+                   <table class="table table-light table-striped">
+                       <thead>
+                           <tr>
+                               <th scope="col">START</th>
+                               <th scope="col">END</th>
+                               <th scope="col">UPID</th>
+                               <th scope="col">USER</th>
+                               <th scope="col">NODE</th>
+                               <th scope="col">TYPE</th>
+                               <th scope="col">STATUS</th>
+                           </tr>
+                       </thead>
+                       <tbody>
+                           {% for task in cluster_tasks %}
+                               <tr>
+                                   <th scope="row">{{ task.starttime|format_datetime }}</th>
+                                   <th scope="row">{{ task.endtime|format_datetime }}</th>
+                                   <td>{{ task.upid }}</td>
+                                   <td>{{ task.user }}</td>
+                                   <td>{{ task.node }}</td>
+                                   <td>{{ task.type }}</td>
+                                   <td>{{ task.status }}</td>
+                               </tr>
+                           {% endfor %}
+                       </tbody>
+                   </table>
+               </div>
+           </div>
+       </div>
     </div>
 </div>
 {% endblock %}
