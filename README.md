@@ -12,9 +12,9 @@ Pour pourvoir run le projet, voici les etapes à suuivre:
  
 4- Activer l’env
 
-	source .env/bin/active	pour linux
+	source .env/bin/active	#pour linux
 
-	.\env\Script\activate.bat 	pour windows
+	.\env\Script\activate.bat 	#pour windows
  
 5- Installer les modules du requierement.txt dans l’env
 
