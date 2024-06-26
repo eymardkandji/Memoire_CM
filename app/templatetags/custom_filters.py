@@ -3,6 +3,7 @@ from datetime import *
 
 register = template.Library()
 
+
 @register.filter
 def format_timedelta(seconds):
     td = timedelta(seconds=seconds)
@@ -11,6 +12,7 @@ def format_timedelta(seconds):
     hours, remainder = divmod(remainder, 3600)
     minutes, seconds = divmod(remainder, 60)
     return f'{days}d {hours:02}:{minutes:02}'
+
 
 @register.filter
 def format_bytes(size):
@@ -23,6 +25,7 @@ def format_bytes(size):
         n += 1
 
     return f"{size:.2f} {power_labels[n]}"
+
 
 @register.filter
 def format_datetime(seconds):
@@ -38,6 +41,7 @@ def format_datetime(seconds):
     # Retourner la date formatée
     return formatted_date
 
+
 @register.filter
 def value_pcent(value):
     try:
@@ -46,3 +50,18 @@ def value_pcent(value):
     finally:
         pass
     return value
+
+
+@register.simple_tag
+def set_var(value):
+    return value
+
+
+@register.filter
+def is_null(value, key):
+    return value.get(key) is None
+
+
+@register.filter
+def get_item(dictionary, key):
+    return dictionary.get(key)

@@ -5,7 +5,126 @@
 {% block title %} Nodes - Cluster Manager {% endblock %}
 
 {% block Nodes-active %}active{% endblock %}
-
 {% block base-content %}
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-12">
+                <div class="bg-secondary rounded h-100 p-4">
+                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                        {% set_var 0 as first %}
+                        {% for node_vm in node_vms %}
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link {% if first == 0 %}active{% endif %}" id="pills-{{ node_vm.node.node }}-tab" data-bs-toggle="pill" data-bs-target="#pills-{{ node_vm.node.node }}" type="button" role="tab" aria-controls="pills-{{ node_vm.node.node }}" aria-selected="false">{{ node_vm.node.node }}</button>
+                            </li>
+                            {% set_var 1 as first %}
+                        {% endfor %}
+                    </ul>
+                    <div class="tab-content" id="pills-tabContent">
+                        {% set_var 0 as first %}
+                        {% for node_vm in node_vms %}
+
+                            <div class="tab-pane fade show {% if first == 0 %}active{% endif %}" id="pills-{{ node_vm.node.node }}" role="tabpanel" aria-labelledby="pills-{{ node_vm.node.node }}-tab">
+                                <div class="container-fluid pt-4 px-4">
+                                    <div class="bg-secondary text-center rounded p-4">
+                                        <div class="d-flex align-items-center justify-content-between mb-2">
+                                            <h6 class="mb-0">Virtual Machines</h6>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table text-start align-middle table-bordered table-hover mb-0 text-center">
+                                                <thead>
+                                                    <tr class="text-white">
+                                                        <th scope="col">VMID</th>
+                                                        <th scope="col">NAME</th>
+                                                        <th scope="col">Network</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for qemu in node_vm.qemu %}
+                                                    	<tr>
+                                                            <td>{{ qemu.vmid}}</td>
+                                                            <td>{{ qemu.name }}</td>
+                                                            <td>
+                                                                {% for i in "0124" %}
+                                                                    {% with "net"|add:i as net_key %}
+                                                                        {% if qemu.qemu_conf|get_item:net_key %}
+                                                                            {{ qemu.qemu_conf|get_item:net_key }}<br>
+                                                                        {% endif %}
+                                                                    {% endwith %}
+                                                                {% endfor %}
+                                                            </td>
+                                                            <td>{{ qemu.status }}</td>
+                                                            <td>
+                                                                <i class="bi btn-primary btn bi-info-circle fa-3x m-2"></i>
+                                                                {% if qemu.status == "stopped" %}
+                                                                	<i class="btn-primary  btn fa fa-play-circle fa-3x m-2"></i>
+                                                                {% else %}
+                                                                    <i class="btn-primary btn fa fa-stop-circle fa-3x m-2"></i>
+                                                                {% endif %}
+                                                                <i class="bi btn btn-primary bi-wrench-adjustable-circle m-2"></i>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="bg-secondary text-center rounded p-4">
+                                        <div class="d-flex align-items-center justify-content-between mb-2">
+                                            <h6 class="mb-0">Linux Containers</h6>
+                                        </div>
+                                        <div class="table-responsive">
+                                            <table class="table text-start align-middle table-bordered table-hover mb-0 text-center">
+                                                <thead>
+                                                    <tr class="text-white">
+                                                        <th scope="col">VMID</th>
+                                                        <th scope="col">NAME</th>
+                                                        <th scope="col">Network</th>
+                                                        <th scope="col">Status</th>
+                                                        <th scope="col">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for lxc in node_vm.lxc %}
+                                                    	<tr>
+                                                            <td>{{ lxc.vmid}}</td>
+                                                            <td>{{ lxc.name }}</td>
+                                                            <td>
+                                                                {% for i in "0124" %}
+                                                                    {% with "net"|add:i as net_key %}
+                                                                        {% if lxc.lxc_conf|get_item:net_key %}
+                                                                            {{ lxc.lxc_conf|get_item:net_key }}<br>
+                                                                        {% endif %}
+                                                                    {% endwith %}
+                                                                {% endfor %}
+                                                            </td>
+                                                            <td>{{ lxc.status }}</td>
+                                                            <td>
+                                                                <i class="bi btn-primary btn bi-info-circle fa-3x m-2"></i>
+                                                                {% if qemu.status == "stopped" %}
+                                                                	<i class="btn-primary  btn fa fa-play-circle fa-3x m-2"></i>
+                                                                {% else %}
+                                                                    <i class="btn-primary btn fa fa-stop-circle fa-3x m-2"></i>
+                                                                {% endif %}
+                                                                <i class="bi btn btn-primary bi-wrench-adjustable-circle m-2"></i>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% set_var 1 as first %}
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 {% endblock %}

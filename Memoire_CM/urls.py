@@ -26,5 +26,7 @@ urlpatterns = [
     path('networks', views.netwoks),
     path('base', views.base),
     path('nodes', views.nodes),
-    path('high-availability',views.high_a)
+    path('high-availability', views.high_a),
+    path('update-chart-data', views.update_chart_data)
 ]
+
